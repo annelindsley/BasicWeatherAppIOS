@@ -24,6 +24,8 @@
     
     [self makeForcasterAPICall];
     
+    [self getForcastData];
+    
     
     // Do any additional setup after loading the view, typically from a nib.
 }
@@ -50,6 +52,15 @@
     self.weatherForcasts = [NSMutableDictionary dictionary];
     
     self.weatherForcasts = [dataDictionary objectForKey:@"currently"];
+}
+
+- (void)getForcastData
+{
+    self.currentTemp = [self.weatherForcasts objectForKey:@"apparentTemperature"];
+    self.currentHumidity = [self.weatherForcasts objectForKey:@"humidity"];
+    self.currentPrecipProbability = [self.weatherForcasts objectForKey:@"precipProbability"];
+    self.currentWeatherSummary = [self.weatherForcasts objectForKey:@"summary"];
+    self.currentWeatherIcon = [self.weatherForcasts objectForKey:@"icon"];
 }
 
 @end
