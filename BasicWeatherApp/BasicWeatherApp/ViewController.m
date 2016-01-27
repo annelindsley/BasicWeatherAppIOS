@@ -44,9 +44,7 @@
     
     NSData *jsonData = [NSData dataWithContentsOfURL:weatherURL];
     
-    NSError *error = nil;
-    
-    NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+    NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
     NSLog(@"%@",dataDictionary);
     
     self.weatherForcasts = [NSMutableDictionary dictionary];
