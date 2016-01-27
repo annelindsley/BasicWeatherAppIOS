@@ -69,9 +69,9 @@
 
 - (void)setForcastDataToLabels
 {
-    self.lblCurrentHumidity.text = [NSString stringWithFormat: @"%@", self.currentHumidity];
-    self.lblCurrentPrecipProb.text = [NSString stringWithFormat: @"%@", self.currentPrecipProbability];
-    self.lblCurrentTemp.text =  [NSString stringWithFormat: @"%@", self.currentTemp];
+    [self formatTemperature];
+    [self formatHumidity];
+    [self formatPrecipProb];
     self.lblCurrentWeatherSummary.text = self.currentWeatherSummary;
 }
 
@@ -121,7 +121,28 @@
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"default"];
     }
+}
+
+- (void)formatTemperature
+{
+    int tempFloat = round([self.currentTemp floatValue]);
     
+    self.lblCurrentTemp.text =  [NSString stringWithFormat:@"%d°",tempFloat];
+}
+
+
+- (void)formatHumidity
+{
+    int humidityFloat = ([self.currentHumidity floatValue] *100);
+    
+    self.lblCurrentHumidity.text =  [NSString stringWithFormat:@"%d%@",humidityFloat, @"%"];
+}
+
+- (void)formatPrecipProb
+{
+    int precipProbFloat = ([self.currentPrecipProbability floatValue] *100);
+    
+    self.lblCurrentPrecipProb.text =  [NSString stringWithFormat:@"%d%@",precipProbFloat, @"%"];
 }
 
 
