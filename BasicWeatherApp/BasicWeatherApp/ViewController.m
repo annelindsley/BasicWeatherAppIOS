@@ -24,7 +24,6 @@
     
     [self makeForcasterAPICall];
     
-    
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -42,9 +41,7 @@
     
     NSData *jsonData = [NSData dataWithContentsOfURL:weatherURL];
     
-    NSError *error = nil;
-    
-    NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+    NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
     NSLog(@"%@",dataDictionary);
     
     self.weatherForcasts = [NSMutableDictionary dictionary];
