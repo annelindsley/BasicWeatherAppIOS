@@ -26,6 +26,10 @@
     
     [self getForcastData];
     
+    [self setForcastDataToLabels];
+    
+    [self setWeatherIcon];
+    
     
     // Do any additional setup after loading the view, typically from a nib.
 }
@@ -62,5 +66,63 @@
     self.currentWeatherSummary = [self.weatherForcasts objectForKey:@"summary"];
     self.currentWeatherIcon = [self.weatherForcasts objectForKey:@"icon"];
 }
+
+- (void)setForcastDataToLabels
+{
+    self.lblCurrentHumidity.text = [NSString stringWithFormat: @"%@", self.currentHumidity];
+    self.lblCurrentPrecipProb.text = [NSString stringWithFormat: @"%@", self.currentPrecipProbability];
+    self.lblCurrentTemp.text =  [NSString stringWithFormat: @"%@", self.currentTemp];
+    self.lblCurrentWeatherSummary.text = self.currentWeatherSummary;
+}
+
+- (void)setWeatherIcon
+{
+    if ([self.currentWeatherIcon isEqualToString: @"clear-day"])
+    {
+        self.imgWeatherIcon.image = [UIImage imageNamed:@"clear-day"];
+    }
+    else if ([self.currentWeatherIcon isEqualToString: @"clear-night"])
+    {
+        self.imgWeatherIcon.image = [UIImage imageNamed:@"clear-day"];
+    }
+    else if ([self.currentWeatherIcon isEqualToString: @"rain"])
+    {
+        self.imgWeatherIcon.image = [UIImage imageNamed:@"rain"];
+    }
+    else if ([self.currentWeatherIcon isEqualToString: @"snow"])
+    {
+        self.imgWeatherIcon.image = [UIImage imageNamed:@"snow"];
+    }
+    else if ([self.currentWeatherIcon isEqualToString: @"sleet"])
+    {
+        self.imgWeatherIcon.image = [UIImage imageNamed:@"sleet"];
+    }
+    else if ([self.currentWeatherIcon isEqualToString: @"wind"])
+    {
+        self.imgWeatherIcon.image = [UIImage imageNamed:@"wind"];
+    }
+    else if ([self.currentWeatherIcon isEqualToString: @"fog"])
+    {
+        self.imgWeatherIcon.image = [UIImage imageNamed:@"fog"];
+    }
+    else if ([self.currentWeatherIcon isEqualToString: @"cloudy"])
+    {
+        self.imgWeatherIcon.image = [UIImage imageNamed:@"cloudy"];
+    }
+    else if ([self.currentWeatherIcon isEqualToString: @"partly-cloudy-day"])
+    {
+        self.imgWeatherIcon.image = [UIImage imageNamed:@"cloudy-day"];
+    }
+    else if ([self.currentWeatherIcon isEqualToString: @"partly-cloudy-night"])
+    {
+        self.imgWeatherIcon.image = [UIImage imageNamed:@"cloudy-night"];
+    }
+    else
+    {
+        self.imgWeatherIcon.image = [UIImage imageNamed:@"default"];
+    }
+    
+}
+
 
 @end
