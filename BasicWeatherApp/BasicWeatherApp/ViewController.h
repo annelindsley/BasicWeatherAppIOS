@@ -12,6 +12,12 @@
 
 @property (strong, nonatomic) NSMutableDictionary *weatherForcasts;
 
+@property (strong, nonatomic) IBOutlet UILabel *lblCurrentHumidity;
+@property (strong, nonatomic) IBOutlet UILabel *lblCurrentPrecipProb;
+@property (strong, nonatomic) IBOutlet UILabel *lblCurrentWeatherSummary;
+@property (strong, nonatomic) IBOutlet UILabel *lblCurrentTemp;
+@property (weak, nonatomic) IBOutlet UIImageView *imgWeatherIcon;
+
 
 @end
 
