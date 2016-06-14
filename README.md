@@ -8,6 +8,4 @@ https://docs.google.com/presentation/d/1nQ6lpclnDxTyXvNgV46W1xboY-4l6col9Np0VpRB
 
 Use each branch to demo a step in creating a basic weather app using the Forcast.io API.
 
-<img width="312" alt="screen shot 2016-06-13 at 9 51 10 pm" src="https://cloud.githubusercontent.com/assets/6294845/16031622/f73cdbde-31b1-11e6-8efc-85930309e793.png">
-
-
+<img width="309" alt="screen shot 2016-06-13 at 9 59 09 pm" src="https://cloud.githubusercontent.com/assets/6294845/16031634/1f2d79be-31b2-11e6-9aa9-b2dc68613b34.png">
