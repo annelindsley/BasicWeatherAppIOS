@@ -1,6 +1,6 @@
 # BasicWeatherAppIOS
 
-A basic weather app using Objective-c for Winter 2016 iOS v Android Workshop hosted by Women Who Code and ChickTech.
+A basic weather app using Objective-C for Winter 2016 iOS v Android Workshop hosted by Women Who Code and ChickTech.
 
 This project served as the foundation for a 2 hour presentation for beginners. 
 Slides of the presentation can be found here: 
