@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import "MBProgressHUD.h"
 
-@interface ViewController : UIViewController
+
+@interface ViewController : UIViewController <CLLocationManagerDelegate>
+
+@property (strong, nonatomic) CLLocationManager *locationManager;
 
 @property (strong, nonatomic) NSMutableDictionary *weatherForcasts;
 
@@ -23,6 +28,8 @@
 @property (strong, nonatomic) NSNumber *currentPrecipProbability;
 @property (strong, nonatomic) NSString *currentWeatherSummary;
 @property (strong, nonatomic) NSString *currentWeatherIcon;
+
+@property (strong, nonatomic) MBProgressHUD				*HUD;
 
 @end
 

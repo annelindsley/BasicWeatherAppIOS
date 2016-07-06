@@ -22,7 +22,9 @@
 {
     [super viewDidLoad];
     
-    [self makeForcasterAPICall];
+    [self initLocationManager];
+    
+    //[self makeForcasterAPICall];
     
     [self getForcastData];
     
@@ -40,20 +42,73 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)makeForcasterAPICall
+- (void)initLocationManager
 {
-    NSString *url = [NSString stringWithFormat:@"https://api.forecast.io/forecast/b344a0c781804387d143eaae20e6333e/%f,%f", CURRENT_LAT, CURRENT_LON];
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
     
-    NSURL *weatherURL = [NSURL URLWithString:url];
+    if([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    {
+        [self.locationManager requestWhenInUseAuthorization];
+    }
     
-    NSData *jsonData = [NSData dataWithContentsOfURL:weatherURL];
+  
+    [self.locationManager startUpdatingLocation];
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+    didUpdateToLocation:(CLLocation *)newLocation
+           fromLocation:(CLLocation *)oldLocation
+{
+    float previousLatitude =  oldLocation.coordinate.latitude;
+    float previousLongitude = oldLocation.coordinate.longitude;
+    float currentLatitude = newLocation.coordinate.latitude;
+    float currentLongitude = newLocation.coordinate.longitude;
     
-    NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
-    NSLog(@"%@",dataDictionary);
+    if (!currentLatitude && !currentLongitude)
+    {
+        [self initHudWithMessage:@"Fetching Location"];
+    }
+    else if (previousLatitude != currentLatitude && previousLongitude != currentLongitude)
+    {
+        [self initHudWithMessage:@"Updating Location"];
+        
+        NSString *url = [NSString stringWithFormat:@"https://api.forecast.io/forecast/b344a0c781804387d143eaae20e6333e/%f,%f", oldLocation.coordinate.latitude, oldLocation.coordinate.longitude];
+        
+        NSURL *weatherURL = [NSURL URLWithString:url];
+        
+        NSData *jsonData = [NSData dataWithContentsOfURL:weatherURL];
+        
+        NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
+        NSLog(@"%@",dataDictionary);
+        
+        self.weatherForcasts = [NSMutableDictionary dictionary];
+        
+        self.weatherForcasts = [dataDictionary objectForKey:@"currently"];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self getForcastData];
+            
+            [self setForcastDataToLabels];
+            
+            [self setWeatherIcon];
+            
+            [self hideHud];
+            
+        });
     
-    self.weatherForcasts = [NSMutableDictionary dictionary];
+
+        
+    }
+    else
+    {
+        NSLog(@"No Update Needed");
+    }
     
-    self.weatherForcasts = [dataDictionary objectForKey:@"currently"];
+
 }
 
 - (void)getForcastData
@@ -141,6 +196,28 @@
     int precipProbFloat = ([self.currentPrecipProbability floatValue] *100);
     
     self.lblCurrentPrecipProb.text =  [NSString stringWithFormat:@"%d%@",precipProbFloat, @"%"];
+}
+
+//------------------------------------------------------------------------------
+#pragma mark - Hud -
+//------------------------------------------------------------------------------
+
+- (void)initHudWithMessage: (NSString *)message
+{
+    if (![self.HUD isHidden])
+    {
+        [self hideHud];
+    }
+    
+    self.HUD = [MBProgressHUD showHUDAddedTo: self.view animated: YES];
+    self.HUD.detailsLabelText = message;
+}
+
+- (void)hideHud
+{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible: NO];
+    
+    [self.HUD hide: YES];
 }
 
 
