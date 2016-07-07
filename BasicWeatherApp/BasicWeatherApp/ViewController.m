@@ -40,8 +40,6 @@
 
 - (void)updateForcastView
 {
-    [self initHudWithMessage: @"Updating Info"];
-    
     if (self.weatherForcast.weatherReport)
     {
         self.weatherForcast.hasDisplayedCurrentForcastData = YES;
@@ -58,6 +56,7 @@
     }
     else
     {
+        [self initHudWithMessage: @"Updating Info"];
         self.weatherForcast.hasDisplayedCurrentForcastData = NO;
     }
     

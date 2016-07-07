@@ -35,9 +35,12 @@
     self.currentLatitude = newLocation.coordinate.latitude;
     self.currentLongitude = newLocation.coordinate.longitude;
     
-    if ([self doesNotHaveCurrentLocation] || [self hasUpdatedLocation] || !(self.hasDisplayedCurrentForcastData))
+    if (self.hasFinishedRetrivingForcast)
     {
-        [self updateForcastData];
+        if ([self hasUpdatedLocation] || !(self.hasDisplayedCurrentForcastData))
+        {
+            [self updateForcastData];
+        }
     }
     
 }
@@ -69,17 +72,22 @@
 
 - (void)updateForcastData
 {
-    dispatch_async(BACKGROUND_QUEUE, ^{
-        
-        [self createForcast];
-        
-        [self getForcastData];
-        
-    });
+        dispatch_async(BACKGROUND_QUEUE, ^{
+            
+            self.hasFinishedRetrivingForcast = NO;
+            
+            [self createForcast];
+            
+            [self getForcastData];
+           
+            [[NSNotificationCenter defaultCenter] postNotificationName: KEY_UPDATED_FORCAST
+                                                                object: nil
+                                                              userInfo: nil];
+        });
     
-    [[NSNotificationCenter defaultCenter] postNotificationName: KEY_UPDATED_FORCAST
-                                                        object: nil
-                                                      userInfo: nil];
+    self.hasFinishedRetrivingForcast = YES;
+
+
 }
 
 - (BOOL)hasUpdatedLocation
@@ -92,19 +100,6 @@
     }
     
     return newLocation;
-}
-
-- (BOOL)doesNotHaveCurrentLocation
-{
-    BOOL noLocation = NO;
-    
-    if (!self.currentLatitude && !self.currentLongitude)
-    {
-        noLocation = YES;
-    }
-    
-    return noLocation;
-    
 }
 
 @end
