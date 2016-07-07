@@ -16,6 +16,7 @@
 		032065491C5890BE004F9B49 /* BasicWeatherAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 032065481C5890BE004F9B49 /* BasicWeatherAppTests.m */; };
 		032065541C5890BE004F9B49 /* BasicWeatherAppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 032065531C5890BE004F9B49 /* BasicWeatherAppUITests.m */; };
 		03A9BF061D2CCA420027D152 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A9BF051D2CCA420027D152 /* MBProgressHUD.m */; };
+		03ED23581D2E0080009B9C41 /* Forcast.m in Sources */ = {isa = PBXBuildFile; fileRef = 03ED23571D2E0080009B9C41 /* Forcast.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,9 @@
 		032065551C5890BE004F9B49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03A9BF041D2CCA420027D152 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		03A9BF051D2CCA420027D152 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		03ED23561D2E0080009B9C41 /* Forcast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Forcast.h; path = ../Forcast.h; sourceTree = "<group>"; };
+		03ED23571D2E0080009B9C41 /* Forcast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Forcast.m; path = ../Forcast.m; sourceTree = "<group>"; };
+		03ED23591D2E0E38009B9C41 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,9 @@
 			children = (
 				032065311C5890BE004F9B49 /* AppDelegate.h */,
 				032065321C5890BE004F9B49 /* AppDelegate.m */,
+				03ED23591D2E0E38009B9C41 /* Constants.h */,
+				03ED23561D2E0080009B9C41 /* Forcast.h */,
+				03ED23571D2E0080009B9C41 /* Forcast.m */,
 				032065341C5890BE004F9B49 /* ViewController.h */,
 				032065351C5890BE004F9B49 /* ViewController.m */,
 				03A9BF071D2CCA490027D152 /* MBProgressHUD */,
@@ -285,6 +292,7 @@
 			files = (
 				032065361C5890BE004F9B49 /* ViewController.m in Sources */,
 				032065331C5890BE004F9B49 /* AppDelegate.m in Sources */,
+				03ED23581D2E0080009B9C41 /* Forcast.m in Sources */,
 				032065301C5890BE004F9B49 /* main.m in Sources */,
 				03A9BF061D2CCA420027D152 /* MBProgressHUD.m in Sources */,
 			);

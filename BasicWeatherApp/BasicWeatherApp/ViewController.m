@@ -8,10 +8,6 @@
 
 #import "ViewController.h"
 
-
-#define CURRENT_LAT  45.5200
-#define CURRENT_LON -122.6819
-
 @interface ViewController ()
 
 @end
@@ -22,75 +18,35 @@
 {
     [super viewDidLoad];
     
-    [self initLocationManager];
+    [self initWeatherForcast];
     
-    //[self makeForcasterAPICall];
+    [self registerForUpdatedForcast];
     
-    [self getForcastData];
-    
-    [self setForcastDataToLabels];
-    
-    [self setWeatherIcon];
-    
-    
-    // Do any additional setup after loading the view, typically from a nib.
+    [self updateForcastView];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-- (void)initLocationManager
+- (void)initWeatherForcast
 {
-    self.locationManager = [[CLLocationManager alloc] init];
-    self.locationManager.delegate = self;
-    self.locationManager.distanceFilter = kCLDistanceFilterNone;
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+    self.weatherForcast = [[Forcast alloc] init];
     
-    if([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-    {
-        [self.locationManager requestWhenInUseAuthorization];
-    }
-    
-  
-    [self.locationManager startUpdatingLocation];
+    [self.weatherForcast initLocationManager];
+    [self.weatherForcast updateForcastData];
 }
 
-- (void)locationManager:(CLLocationManager *)manager
-    didUpdateToLocation:(CLLocation *)newLocation
-           fromLocation:(CLLocation *)oldLocation
+- (void)updateForcastView
 {
-    float previousLatitude =  oldLocation.coordinate.latitude;
-    float previousLongitude = oldLocation.coordinate.longitude;
-    float currentLatitude = newLocation.coordinate.latitude;
-    float currentLongitude = newLocation.coordinate.longitude;
+    [self initHudWithMessage: @"Updating Info"];
     
-    if (!currentLatitude && !currentLongitude)
+    if (self.weatherForcast.weatherReport)
     {
-        [self initHudWithMessage:@"Fetching Location"];
-    }
-    else if (previousLatitude != currentLatitude && previousLongitude != currentLongitude)
-    {
-        [self initHudWithMessage:@"Updating Location"];
-        
-        NSString *url = [NSString stringWithFormat:@"https://api.forecast.io/forecast/b344a0c781804387d143eaae20e6333e/%f,%f", oldLocation.coordinate.latitude, oldLocation.coordinate.longitude];
-        
-        NSURL *weatherURL = [NSURL URLWithString:url];
-        
-        NSData *jsonData = [NSData dataWithContentsOfURL:weatherURL];
-        
-        NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
-        NSLog(@"%@",dataDictionary);
-        
-        self.weatherForcasts = [NSMutableDictionary dictionary];
-        
-        self.weatherForcasts = [dataDictionary objectForKey:@"currently"];
+        self.weatherForcast.hasDisplayedCurrentForcastData = YES;
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [self getForcastData];
             
             [self setForcastDataToLabels];
             
@@ -99,25 +55,20 @@
             [self hideHud];
             
         });
-    
-
-        
     }
     else
     {
-        NSLog(@"No Update Needed");
+        self.weatherForcast.hasDisplayedCurrentForcastData = NO;
     }
     
 
 }
-
-- (void)getForcastData
+- (void)registerForUpdatedForcast
 {
-    self.currentTemp = [self.weatherForcasts objectForKey:@"apparentTemperature"];
-    self.currentHumidity = [self.weatherForcasts objectForKey:@"humidity"];
-    self.currentPrecipProbability = [self.weatherForcasts objectForKey:@"precipProbability"];
-    self.currentWeatherSummary = [self.weatherForcasts objectForKey:@"summary"];
-    self.currentWeatherIcon = [self.weatherForcasts objectForKey:@"icon"];
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(updateForcastView)
+                                                 name: KEY_UPDATED_FORCAST
+                                               object: nil];
 }
 
 - (void)setForcastDataToLabels
@@ -125,48 +76,48 @@
     [self formatTemperature];
     [self formatHumidity];
     [self formatPrecipProb];
-    self.lblCurrentWeatherSummary.text = self.currentWeatherSummary;
+    self.lblCurrentWeatherSummary.text = self.weatherForcast.currentWeatherSummary;
 }
 
 - (void)setWeatherIcon
 {
-    if ([self.currentWeatherIcon isEqualToString: @"clear-day"])
+    if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"clear-day"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"clear-day"];
     }
-    else if ([self.currentWeatherIcon isEqualToString: @"clear-night"])
+    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"clear-night"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"clear-day"];
     }
-    else if ([self.currentWeatherIcon isEqualToString: @"rain"])
+    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"rain"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"rain"];
     }
-    else if ([self.currentWeatherIcon isEqualToString: @"snow"])
+    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"snow"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"snow"];
     }
-    else if ([self.currentWeatherIcon isEqualToString: @"sleet"])
+    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"sleet"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"sleet"];
     }
-    else if ([self.currentWeatherIcon isEqualToString: @"wind"])
+    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"wind"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"wind"];
     }
-    else if ([self.currentWeatherIcon isEqualToString: @"fog"])
+    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"fog"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"fog"];
     }
-    else if ([self.currentWeatherIcon isEqualToString: @"cloudy"])
+    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"cloudy"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"cloudy"];
     }
-    else if ([self.currentWeatherIcon isEqualToString: @"partly-cloudy-day"])
+    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"partly-cloudy-day"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"cloudy-day"];
     }
-    else if ([self.currentWeatherIcon isEqualToString: @"partly-cloudy-night"])
+    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"partly-cloudy-night"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"cloudy-night"];
     }
@@ -178,7 +129,7 @@
 
 - (void)formatTemperature
 {
-    int tempFloat = round([self.currentTemp floatValue]);
+    int tempFloat = round([self.weatherForcast.currentTemp floatValue]);
     
     self.lblCurrentTemp.text =  [NSString stringWithFormat:@"%d°",tempFloat];
 }
@@ -186,14 +137,14 @@
 
 - (void)formatHumidity
 {
-    int humidityFloat = ([self.currentHumidity floatValue] *100);
+    int humidityFloat = ([self.weatherForcast.currentHumidity floatValue] *100);
     
     self.lblCurrentHumidity.text =  [NSString stringWithFormat:@"%d%@",humidityFloat, @"%"];
 }
 
 - (void)formatPrecipProb
 {
-    int precipProbFloat = ([self.currentPrecipProbability floatValue] *100);
+    int precipProbFloat = ([self.weatherForcast.currentPrecipProbability floatValue] *100);
     
     self.lblCurrentPrecipProb.text =  [NSString stringWithFormat:@"%d%@",precipProbFloat, @"%"];
 }

@@ -7,15 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreLocation/CoreLocation.h>
 #import "MBProgressHUD.h"
+#import "Forcast.h"
+#import "Constants.h"
 
-
-@interface ViewController : UIViewController <CLLocationManagerDelegate>
-
-@property (strong, nonatomic) CLLocationManager *locationManager;
-
-@property (strong, nonatomic) NSMutableDictionary *weatherForcasts;
+@interface ViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UILabel *lblCurrentHumidity;
 @property (strong, nonatomic) IBOutlet UILabel *lblCurrentPrecipProb;
@@ -23,13 +19,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblCurrentTemp;
 @property (strong, nonatomic) IBOutlet UIImageView *imgWeatherIcon;
 
-@property (strong, nonatomic) NSNumber *currentTemp;
-@property (strong, nonatomic) NSNumber *currentHumidity;
-@property (strong, nonatomic) NSNumber *currentPrecipProbability;
-@property (strong, nonatomic) NSString *currentWeatherSummary;
-@property (strong, nonatomic) NSString *currentWeatherIcon;
+@property (strong, nonatomic) Forcast *weatherForcast;
 
-@property (strong, nonatomic) MBProgressHUD				*HUD;
+
+@property (strong, nonatomic) MBProgressHUD	*HUD;
 
 @end
 
