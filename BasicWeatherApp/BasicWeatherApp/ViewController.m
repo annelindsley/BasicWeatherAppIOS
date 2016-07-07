@@ -10,6 +10,10 @@
 
 @interface ViewController ()
 
+{
+    NSMutableArray *connectingImages;
+}
+
 @end
 
 @implementation ViewController
@@ -23,6 +27,8 @@
     [self registerForUpdatedForcast];
     
     [self updateForcastView];
+    
+    [self createWaitingScreen];
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,13 +56,14 @@
             
             [self setWeatherIcon];
             
-            [self hideHud];
+            [self hideWaitingScreen];
             
         });
     }
     else
     {
-        [self initHudWithMessage: @"Updating Info"];
+        
+        [self createWaitingScreen];
         self.weatherForcast.hasDisplayedCurrentForcastData = NO;
     }
     
@@ -149,25 +156,79 @@
 }
 
 //------------------------------------------------------------------------------
-#pragma mark - Hud -
+#pragma mark - Waiting Screen -
 //------------------------------------------------------------------------------
 
-- (void)initHudWithMessage: (NSString *)message
+- (void)createWaitingScreen
 {
-    if (![self.HUD isHidden])
+    if (!self.displayingWaitingScreen)
     {
-        [self hideHud];
+        self.viewWaitingScreen = [[UIView alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
+        
+        self.viewWaitingScreen.backgroundColor = [UIColor colorWithRed: 0
+                                                                 green: 60
+                                                                  blue: 60
+                                                                 alpha: .95];
+        
+        self.imgConnection = [[UIImageView alloc] initWithFrame: CGRectMake (self.viewWaitingScreen.frame.origin.x,
+                                                                             self.viewWaitingScreen.frame.origin.y,
+                                                                             100,
+                                                                             100)];
+        
+        self.imgConnection.center = self.viewWaitingScreen.center;
+        
+        [self initConnectionImages];
+        
+        [self startConnectionAnimation];
+        
+        self.imgConnection.backgroundColor = [UIColor purpleColor];
+        
+        [self.viewWaitingScreen addSubview:self.imgConnection];
+        
+        [self.view addSubview: self.viewWaitingScreen];
+        
+        self.displayingWaitingScreen = YES;
     }
-    
-    self.HUD = [MBProgressHUD showHUDAddedTo: self.view animated: YES];
-    self.HUD.detailsLabelText = message;
 }
 
-- (void)hideHud
+- (void)hideWaitingScreen
 {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible: NO];
+    [UIView transitionWithView: self.view
+                      duration: 0.5f
+                       options: UIViewAnimationOptionTransitionCrossDissolve
+                    animations: ^{
+                        
+                        [self.viewWaitingScreen removeFromSuperview];
+                        [self stopConnectionAnimation];
+                        self.viewWaitingScreen.hidden = YES;
+                        
+                    } completion:nil];
+
+}
+
+
+- (void)initConnectionImages
+{
+    connectingImages = [[NSMutableArray alloc] initWithObjects:
+                        [UIImage imageNamed:@"rain"],
+                        [UIImage imageNamed:@"snow"],
+                        [UIImage imageNamed:@"fog"],
+                        [UIImage imageNamed:@"cloudy-night"],
+                        nil];
     
-    [self.HUD hide: YES];
+    
+    self.imgConnection.animationImages = connectingImages;
+    self.imgConnection.animationDuration = 1;
+}
+
+- (void)startConnectionAnimation
+{
+    [self.imgConnection startAnimating];
+}
+
+- (void)stopConnectionAnimation
+{
+    [self.imgConnection stopAnimating];
 }
 
 

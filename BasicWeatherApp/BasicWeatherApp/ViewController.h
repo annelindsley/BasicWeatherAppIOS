@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MBProgressHUD.h"
 #import "Forcast.h"
 #import "Constants.h"
 
@@ -21,8 +20,9 @@
 
 @property (strong, nonatomic) Forcast *weatherForcast;
 
-
-@property (strong, nonatomic) MBProgressHUD	*HUD;
+@property (strong, nonatomic) UIImageView *imgConnection;
+@property (strong, nonatomic) UIView *viewWaitingScreen;
+@property (nonatomic) BOOL displayingWaitingScreen;
 
 @end
 

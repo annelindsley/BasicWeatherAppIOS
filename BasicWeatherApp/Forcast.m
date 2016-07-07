@@ -87,7 +87,6 @@
     
     self.hasFinishedRetrivingForcast = YES;
 
-
 }
 
 - (BOOL)hasUpdatedLocation
