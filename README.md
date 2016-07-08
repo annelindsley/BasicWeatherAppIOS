@@ -8,7 +8,7 @@ https://docs.google.com/presentation/d/1nQ6lpclnDxTyXvNgV46W1xboY-4l6col9Np0VpRB
 
 Use each branch to demo a step in creating a basic weather app using the Forcast.io API.
 
-*EDIT*\n
+_EDIT_
 
 The Master branch has been updated to include Step 9 which we did not cover in the presentation. 
 
