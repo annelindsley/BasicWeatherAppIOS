@@ -214,7 +214,7 @@
                         
                         [self.viewWaitingScreen removeFromSuperview];
                         [self stopConnectionAnimation];
-                        self.viewWaitingScreen.hidden = YES;
+                        self.displayingWaitingScreen = NO;
                         
                     } completion:nil];
 
