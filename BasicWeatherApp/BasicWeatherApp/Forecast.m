@@ -1,14 +1,14 @@
 //
-//  Forcast.m
+//  Forecast.m
 //  BasicWeatherApp
 //
-//  Created by Anne Lindsley on 7/6/16.
+//  Created by Anne Lindsley on 7/7/16.
 //  Copyright © 2016 Anne Lindsley. All rights reserved.
 //
 
-#import "Forcast.h"
+#import "Forecast.h"
 
-@implementation Forcast
+@implementation Forecast
 
 
 //------------------------------------------------------------------------------
@@ -41,9 +41,9 @@
     self.currentLongitude = newLocation.coordinate.longitude;
     
     
-    if ([self hasUpdatedLocation] || !(self.hasDisplayedCurrentForcastData))
+    if ([self hasUpdatedLocation] || !(self.hasDisplayedCurrentForecastData))
     {
-        [self updateForcastData];
+        [self updateForecastData];
     }
 }
 
@@ -55,17 +55,17 @@
     {
         newLocation = YES;
         self.weatherReport = nil;
-        self.hasDisplayedCurrentForcastData = NO;
+        self.hasDisplayedCurrentForecastData = NO;
     }
     
     return newLocation;
 }
 
 //------------------------------------------------------------------------------
-#pragma mark - Forcast Data -
+#pragma mark - Forecast Data -
 //------------------------------------------------------------------------------
 
-- (void)createForcast
+- (void)createForecast
 {
     NSString *url = [NSString stringWithFormat:@"https://api.forecast.io/forecast/b344a0c781804387d143eaae20e6333e/%f,%f", self.currentLatitude, self.currentLongitude];
     
@@ -81,7 +81,7 @@
     self.weatherReport = [dataDictionary objectForKey:@"currently"];
 }
 
-- (void)getForcastData
+- (void)getForecastData
 {
     self.currentTemp = [self.weatherReport objectForKey:@"apparentTemperature"];
     self.currentHumidity = [self.weatherReport objectForKey:@"humidity"];
@@ -90,24 +90,24 @@
     self.currentWeatherIcon = [self.weatherReport objectForKey:@"icon"];
 }
 
-- (void)updateForcastData
+- (void)updateForecastData
 {
     [self postWaitingScreen];
     
-        dispatch_async(BACKGROUND_QUEUE, ^{
+    dispatch_async(BACKGROUND_QUEUE, ^{
+        
+        [self createForecast];
+        
+        [self getForecastData];
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
             
-            [self createForcast];
-            
-            [self getForcastData];
-           
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                
-                [self postUpdatedForcast];
-
-            });
+            [self postUpdatedForecast];
             
         });
-
+        
+    });
+    
 }
 
 //------------------------------------------------------------------------------
@@ -121,9 +121,9 @@
                                                       userInfo: nil];
 }
 
-- (void)postUpdatedForcast
+- (void)postUpdatedForecast
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName: KEY_UPDATED_FORCAST
+    [[NSNotificationCenter defaultCenter] postNotificationName: KEY_UPDATED_FORECAST
                                                         object: nil
                                                       userInfo: nil];
 }

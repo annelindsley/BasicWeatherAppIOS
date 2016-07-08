@@ -10,7 +10,7 @@
 #define Constants_h
 
 #define BACKGROUND_QUEUE dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-#define KEY_UPDATED_FORCAST				@"UpdatedForcast"
+#define KEY_UPDATED_FORECAST				@"UpdatedForecast"
 #define KEY_DISPLAY_WAITING                 @"DisplayWaitingScreen"
 
 #endif /* Constants_h */

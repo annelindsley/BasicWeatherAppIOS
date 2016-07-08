@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Forcast.h"
+#import "Forecast.h"
 #import "Constants.h"
 
 @interface ViewController : UIViewController
@@ -18,7 +18,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblCurrentTemp;
 @property (strong, nonatomic) IBOutlet UIImageView *imgWeatherIcon;
 
-@property (strong, nonatomic) Forcast *weatherForcast;
+@property (strong, nonatomic) Forecast *weatherForecast;
 
 @property (nonatomic) BOOL displayingWaitingScreen;
 

@@ -1,8 +1,8 @@
 //
-//  Forcast.h
+//  Forecast.h
 //  BasicWeatherApp
 //
-//  Created by Anne Lindsley on 7/6/16.
+//  Created by Anne Lindsley on 7/7/16.
 //  Copyright © 2016 Anne Lindsley. All rights reserved.
 //
 
@@ -11,10 +11,10 @@
 #import <CoreLocation/CoreLocation.h>
 #import "Constants.h"
 
-@interface Forcast : NSObject <CLLocationManagerDelegate>
+@interface Forecast : NSObject <CLLocationManagerDelegate>
 
 - (void)initLocationManager;
-- (void)updateForcastData;
+- (void)updateForecastData;
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 
@@ -26,7 +26,7 @@
 @property (strong, nonatomic) NSString *currentWeatherSummary;
 @property (strong, nonatomic) NSString *currentWeatherIcon;
 
-@property (nonatomic) BOOL hasDisplayedCurrentForcastData;
+@property (nonatomic) BOOL hasDisplayedCurrentForecastData;
 @property (nonatomic) float previousLatitude;
 @property (nonatomic) float previousLongitude;
 @property (nonatomic) float currentLatitude;

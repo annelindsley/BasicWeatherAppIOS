@@ -15,7 +15,7 @@
 		0320653E1C5890BE004F9B49 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0320653C1C5890BE004F9B49 /* LaunchScreen.storyboard */; };
 		032065491C5890BE004F9B49 /* BasicWeatherAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 032065481C5890BE004F9B49 /* BasicWeatherAppTests.m */; };
 		032065541C5890BE004F9B49 /* BasicWeatherAppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 032065531C5890BE004F9B49 /* BasicWeatherAppUITests.m */; };
-		03ED23581D2E0080009B9C41 /* Forcast.m in Sources */ = {isa = PBXBuildFile; fileRef = 03ED23571D2E0080009B9C41 /* Forcast.m */; };
+		03ED239E1D2F4C70009B9C41 /* Forecast.m in Sources */ = {isa = PBXBuildFile; fileRef = 03ED239D1D2F4C70009B9C41 /* Forecast.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,9 +52,9 @@
 		0320654F1C5890BE004F9B49 /* BasicWeatherAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BasicWeatherAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		032065531C5890BE004F9B49 /* BasicWeatherAppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BasicWeatherAppUITests.m; sourceTree = "<group>"; };
 		032065551C5890BE004F9B49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		03ED23561D2E0080009B9C41 /* Forcast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Forcast.h; path = ../Forcast.h; sourceTree = "<group>"; };
-		03ED23571D2E0080009B9C41 /* Forcast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Forcast.m; path = ../Forcast.m; sourceTree = "<group>"; };
 		03ED23591D2E0E38009B9C41 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		03ED239C1D2F4C70009B9C41 /* Forecast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Forecast.h; sourceTree = "<group>"; };
+		03ED239D1D2F4C70009B9C41 /* Forecast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Forecast.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,8 +108,8 @@
 				032065311C5890BE004F9B49 /* AppDelegate.h */,
 				032065321C5890BE004F9B49 /* AppDelegate.m */,
 				03ED23591D2E0E38009B9C41 /* Constants.h */,
-				03ED23561D2E0080009B9C41 /* Forcast.h */,
-				03ED23571D2E0080009B9C41 /* Forcast.m */,
+				03ED239C1D2F4C70009B9C41 /* Forecast.h */,
+				03ED239D1D2F4C70009B9C41 /* Forecast.m */,
 				032065341C5890BE004F9B49 /* ViewController.h */,
 				032065351C5890BE004F9B49 /* ViewController.m */,
 				032065371C5890BE004F9B49 /* Main.storyboard */,
@@ -279,7 +279,7 @@
 			files = (
 				032065361C5890BE004F9B49 /* ViewController.m in Sources */,
 				032065331C5890BE004F9B49 /* AppDelegate.m in Sources */,
-				03ED23581D2E0080009B9C41 /* Forcast.m in Sources */,
+				03ED239E1D2F4C70009B9C41 /* Forecast.m in Sources */,
 				032065301C5890BE004F9B49 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -25,16 +25,16 @@
 {
     [super viewDidLoad];
     
-    [self initWeatherForcast];
+    [self initWeatherForecast];
     
-    [self registerForUpdatedForcast];
+    [self registerForUpdatedForecast];
     
     [self registerForDisplayWaitingScreen];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self updateForcastView];
+    [self updateForecastView];
     
     [self createWaitingScreen];
 }
@@ -45,26 +45,26 @@
 }
 
 //------------------------------------------------------------------------------
-#pragma mark - Forcast Class -
+#pragma mark - Forecast Class -
 //------------------------------------------------------------------------------
 
-- (void)initWeatherForcast
+- (void)initWeatherForecast
 {
-    self.weatherForcast = [[Forcast alloc] init];
+    self.weatherForecast = [[Forecast alloc] init];
     
-    [self.weatherForcast initLocationManager];
-    [self.weatherForcast updateForcastData];
+    [self.weatherForecast initLocationManager];
+    [self.weatherForecast updateForecastData];
 }
 
-- (void)updateForcastView
+- (void)updateForecastView
 {
-    if (self.weatherForcast.weatherReport)
+    if (self.weatherForecast.weatherReport)
     {
-        self.weatherForcast.hasDisplayedCurrentForcastData = YES;
+        self.weatherForecast.hasDisplayedCurrentForecastData = YES;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            [self setForcastDataToLabels];
+            [self setForecastDataToLabels];
             
             [self setWeatherIcon];
             
@@ -76,7 +76,7 @@
     {
         //[self createWaitingScreen];
         
-        self.weatherForcast.hasDisplayedCurrentForcastData = NO;
+        self.weatherForecast.hasDisplayedCurrentForecastData = NO;
     }
     
 
@@ -86,11 +86,11 @@
 #pragma mark - Registrations -
 //------------------------------------------------------------------------------
 
-- (void)registerForUpdatedForcast
+- (void)registerForUpdatedForecast
 {
     [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(updateForcastView)
-                                                 name: KEY_UPDATED_FORCAST
+                                             selector: @selector(updateForecastView)
+                                                 name: KEY_UPDATED_FORECAST
                                                object: nil];
 }
 
@@ -107,53 +107,53 @@
 #pragma mark - Set Data to UI -
 //------------------------------------------------------------------------------
 
-- (void)setForcastDataToLabels
+- (void)setForecastDataToLabels
 {
     [self formatTemperature];
     [self formatHumidity];
     [self formatPrecipProb];
-    self.lblCurrentWeatherSummary.text = self.weatherForcast.currentWeatherSummary;
+    self.lblCurrentWeatherSummary.text = self.weatherForecast.currentWeatherSummary;
 }
 
 - (void)setWeatherIcon
 {
-    if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"clear-day"])
+    if ([self.weatherForecast.currentWeatherIcon isEqualToString: @"clear-day"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"clear-day"];
     }
-    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"clear-night"])
+    else if ([self.weatherForecast.currentWeatherIcon isEqualToString: @"clear-night"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"clear-day"];
     }
-    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"rain"])
+    else if ([self.weatherForecast.currentWeatherIcon isEqualToString: @"rain"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"rain"];
     }
-    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"snow"])
+    else if ([self.weatherForecast.currentWeatherIcon isEqualToString: @"snow"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"snow"];
     }
-    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"sleet"])
+    else if ([self.weatherForecast.currentWeatherIcon isEqualToString: @"sleet"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"sleet"];
     }
-    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"wind"])
+    else if ([self.weatherForecast.currentWeatherIcon isEqualToString: @"wind"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"wind"];
     }
-    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"fog"])
+    else if ([self.weatherForecast.currentWeatherIcon isEqualToString: @"fog"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"fog"];
     }
-    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"cloudy"])
+    else if ([self.weatherForecast.currentWeatherIcon isEqualToString: @"cloudy"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"cloudy"];
     }
-    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"partly-cloudy-day"])
+    else if ([self.weatherForecast.currentWeatherIcon isEqualToString: @"partly-cloudy-day"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"cloudy-day"];
     }
-    else if ([self.weatherForcast.currentWeatherIcon isEqualToString: @"partly-cloudy-night"])
+    else if ([self.weatherForecast.currentWeatherIcon isEqualToString: @"partly-cloudy-night"])
     {
         self.imgWeatherIcon.image = [UIImage imageNamed:@"cloudy-night"];
     }
@@ -169,7 +169,7 @@
 
 - (void)formatTemperature
 {
-    int tempFloat = round([self.weatherForcast.currentTemp floatValue]);
+    int tempFloat = round([self.weatherForecast.currentTemp floatValue]);
     
     self.lblCurrentTemp.text =  [NSString stringWithFormat:@"%d°",tempFloat];
 }
@@ -177,14 +177,14 @@
 
 - (void)formatHumidity
 {
-    int humidityFloat = ([self.weatherForcast.currentHumidity floatValue] *100);
+    int humidityFloat = ([self.weatherForecast.currentHumidity floatValue] *100);
     
     self.lblCurrentHumidity.text =  [NSString stringWithFormat:@"%d%@",humidityFloat, @"%"];
 }
 
 - (void)formatPrecipProb
 {
-    int precipProbFloat = ([self.weatherForcast.currentPrecipProbability floatValue] *100);
+    int precipProbFloat = ([self.weatherForecast.currentPrecipProbability floatValue] *100);
     
     self.lblCurrentPrecipProb.text =  [NSString stringWithFormat:@"%d%@",precipProbFloat, @"%"];
 }
