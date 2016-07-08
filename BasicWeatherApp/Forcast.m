@@ -21,8 +21,7 @@
     {
         [self.locationManager requestWhenInUseAuthorization];
     }
-    
-    
+    [self.locationManager startMonitoringSignificantLocationChanges];
     [self.locationManager startUpdatingLocation];
 }
 
@@ -35,17 +34,14 @@
     self.currentLatitude = newLocation.coordinate.latitude;
     self.currentLongitude = newLocation.coordinate.longitude;
     
-    if (self.hasFinishedRetrivingForcast)
-    {
-        if ([self hasUpdatedLocation] || !(self.hasDisplayedCurrentForcastData))
-        {
-            [self updateForcastData];
-        }
-    }
     
+    if ([self hasUpdatedLocation] || !(self.hasDisplayedCurrentForcastData))
+    {
+        [self updateForcastData];
+    }
 }
 
--(void)createForcast
+- (void)createForcast
 {
     NSString *url = [NSString stringWithFormat:@"https://api.forecast.io/forecast/b344a0c781804387d143eaae20e6333e/%f,%f", self.currentLatitude, self.currentLongitude];
     
@@ -72,30 +68,41 @@
 
 - (void)updateForcastData
 {
+    [self postWaitingScreen];
+    
         dispatch_async(BACKGROUND_QUEUE, ^{
-            
-            self.hasFinishedRetrivingForcast = NO;
             
             [self createForcast];
             
             [self getForcastData];
            
-            [[NSNotificationCenter defaultCenter] postNotificationName: KEY_UPDATED_FORCAST
-                                                                object: nil
-                                                              userInfo: nil];
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName: KEY_UPDATED_FORCAST
+                                                                    object: nil
+                                                                  userInfo: nil];
+            });
+            
         });
-    
-    self.hasFinishedRetrivingForcast = YES;
 
+}
+
+- (void)postWaitingScreen
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName: KEY_DISPLAY_WAITING
+                                                        object: nil
+                                                      userInfo: nil];
 }
 
 - (BOOL)hasUpdatedLocation
 {
     BOOL newLocation = NO;
     
-    if (self.previousLatitude != self.currentLatitude && self.previousLongitude != self.currentLongitude)
+    if (self.previousLatitude != self.currentLatitude || self.previousLongitude != self.currentLongitude)
     {
         newLocation = YES;
+        self.weatherReport = nil;
+        self.hasDisplayedCurrentForcastData = NO;
     }
     
     return newLocation;

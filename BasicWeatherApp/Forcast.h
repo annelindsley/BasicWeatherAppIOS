@@ -27,7 +27,6 @@
 @property (strong, nonatomic) NSString *currentWeatherIcon;
 
 @property (nonatomic) BOOL hasDisplayedCurrentForcastData;
-@property (nonatomic) BOOL hasFinishedRetrivingForcast;
 @property (nonatomic) float previousLatitude;
 @property (nonatomic) float previousLongitude;
 @property (nonatomic) float currentLatitude;

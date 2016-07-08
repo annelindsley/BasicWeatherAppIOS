@@ -26,6 +26,11 @@
     
     [self registerForUpdatedForcast];
     
+    [self registerForDisplayWaitingScreen];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
     [self updateForcastView];
     
     [self createWaitingScreen];
@@ -62,8 +67,8 @@
     }
     else
     {
+        //[self createWaitingScreen];
         
-        [self createWaitingScreen];
         self.weatherForcast.hasDisplayedCurrentForcastData = NO;
     }
     
@@ -75,6 +80,15 @@
                                              selector: @selector(updateForcastView)
                                                  name: KEY_UPDATED_FORCAST
                                                object: nil];
+}
+
+- (void)registerForDisplayWaitingScreen
+{
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(createWaitingScreen)
+                                                 name: KEY_DISPLAY_WAITING
+                                               object: nil];
+    
 }
 
 - (void)setForcastDataToLabels
