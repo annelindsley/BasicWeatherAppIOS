@@ -8,7 +8,8 @@ https://docs.google.com/presentation/d/1nQ6lpclnDxTyXvNgV46W1xboY-4l6col9Np0VpRB
 
 Use each branch to demo a step in creating a basic weather app using the Forcast.io API.
 
-*EDIT*
+*EDIT*\n
+
 The Master branch has been updated to include Step 9 which we did not cover in the presentation. 
 
 Step 9 creates a Forcast** class, introduces multithreading into the project, creates a waiting screen while data is loading, and uses the device's current location to propagate weather.
