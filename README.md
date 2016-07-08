@@ -15,7 +15,7 @@ The Master branch has been updated to include Step 9 which we did not cover in t
 Step 9 creates a Forcast** class, introduces multithreading into the project, creates a waiting screen while data is loading, and uses the device's current location to propagate weather.
 Top tip:  use the simulator and change the coordinates to display weather from all over the world. Debug > Location > Custom Location
 
-If anyone is interested in reviewing Step 9 please contact me and I'm happy to explain it: @annelindsley everywhere there is to contact peeps. 
+If anyone is interested in reviewing Step 9 please contact me and I'm happy to explain it: @annelindsley pretty much anywhere there is to contact peeps. 
 
 If you'd like to view the complete project from the presentation please look at the Step 8 branch.
 
