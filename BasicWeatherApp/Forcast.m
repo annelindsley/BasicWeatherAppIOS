@@ -10,6 +10,11 @@
 
 @implementation Forcast
 
+
+//------------------------------------------------------------------------------
+#pragma mark - Location -
+//------------------------------------------------------------------------------
+
 - (void)initLocationManager
 {
     self.locationManager = [[CLLocationManager alloc] init];
@@ -21,6 +26,7 @@
     {
         [self.locationManager requestWhenInUseAuthorization];
     }
+    
     [self.locationManager startMonitoringSignificantLocationChanges];
     [self.locationManager startUpdatingLocation];
 }
@@ -40,6 +46,24 @@
         [self updateForcastData];
     }
 }
+
+- (BOOL)hasUpdatedLocation
+{
+    BOOL newLocation = NO;
+    
+    if (self.previousLatitude != self.currentLatitude || self.previousLongitude != self.currentLongitude)
+    {
+        newLocation = YES;
+        self.weatherReport = nil;
+        self.hasDisplayedCurrentForcastData = NO;
+    }
+    
+    return newLocation;
+}
+
+//------------------------------------------------------------------------------
+#pragma mark - Forcast Data -
+//------------------------------------------------------------------------------
 
 - (void)createForcast
 {
@@ -78,14 +102,17 @@
            
             dispatch_sync(dispatch_get_main_queue(), ^{
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName: KEY_UPDATED_FORCAST
-                                                                    object: nil
-                                                                  userInfo: nil];
+                [self postUpdatedForcast];
+
             });
             
         });
 
 }
+
+//------------------------------------------------------------------------------
+#pragma mark - Notifications -
+//------------------------------------------------------------------------------
 
 - (void)postWaitingScreen
 {
@@ -94,18 +121,11 @@
                                                       userInfo: nil];
 }
 
-- (BOOL)hasUpdatedLocation
+- (void)postUpdatedForcast
 {
-    BOOL newLocation = NO;
-    
-    if (self.previousLatitude != self.currentLatitude || self.previousLongitude != self.currentLongitude)
-    {
-        newLocation = YES;
-        self.weatherReport = nil;
-        self.hasDisplayedCurrentForcastData = NO;
-    }
-    
-    return newLocation;
+    [[NSNotificationCenter defaultCenter] postNotificationName: KEY_UPDATED_FORCAST
+                                                        object: nil
+                                                      userInfo: nil];
 }
 
 @end

@@ -14,6 +14,9 @@
     NSMutableArray *connectingImages;
 }
 
+@property (strong, nonatomic) UIImageView *imgConnection;
+@property (strong, nonatomic) UIView *viewWaitingScreen;
+
 @end
 
 @implementation ViewController
@@ -40,6 +43,10 @@
 {
     [super didReceiveMemoryWarning];
 }
+
+//------------------------------------------------------------------------------
+#pragma mark - Forcast Class -
+//------------------------------------------------------------------------------
 
 - (void)initWeatherForcast
 {
@@ -74,6 +81,11 @@
     
 
 }
+
+//------------------------------------------------------------------------------
+#pragma mark - Registrations -
+//------------------------------------------------------------------------------
+
 - (void)registerForUpdatedForcast
 {
     [[NSNotificationCenter defaultCenter] addObserver: self
@@ -90,6 +102,10 @@
                                                object: nil];
     
 }
+
+//------------------------------------------------------------------------------
+#pragma mark - Set Data to UI -
+//------------------------------------------------------------------------------
 
 - (void)setForcastDataToLabels
 {
@@ -146,6 +162,10 @@
         self.imgWeatherIcon.image = [UIImage imageNamed:@"default"];
     }
 }
+
+//------------------------------------------------------------------------------
+#pragma mark - Formatting For Display -
+//------------------------------------------------------------------------------
 
 - (void)formatTemperature
 {

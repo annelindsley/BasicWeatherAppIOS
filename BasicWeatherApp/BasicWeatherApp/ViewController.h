@@ -20,8 +20,6 @@
 
 @property (strong, nonatomic) Forcast *weatherForcast;
 
-@property (strong, nonatomic) UIImageView *imgConnection;
-@property (strong, nonatomic) UIView *viewWaitingScreen;
 @property (nonatomic) BOOL displayingWaitingScreen;
 
 @end
